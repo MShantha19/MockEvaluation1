@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>cart</title>
+   
+  </head>
+  <body>
+     <nav>
+      <a href="index.html">Home</a>
+      <a href="whislist.html">whislist</a>
+      <a href="cart.html">cart</a>
+
+    </nav>
+    <section id="checkout-section">
+      <h3>Total Price: <span id="total-price">100</span></h3>
+      <button id="checkout-btn">Checkout</button>
+    </section>
+    <main>
+      <button id="cart-grid"  class="grid"></div>
+      </main>
+      <script>
+        document.addEventListener('DOMContentLoaded',() =>{
+       const cart =JSON.parse(localstorage.getItem('cartProducts'))||[];
+       const grid=document.getElementById('cart-grid');
+       const totalpriceElement=document.getElementById('total-price');
+       function updateCartDisplay(){
+         grid.innerHTML='';
+         let totalprice=0;
+       
+       cart.forEach(products, index)=>{
+         totalprice+=product.price;
+         const card = document.createElement('div');
+         card.className = 'card';
+         card.innerHTML='
+         <img src="${product.image}" alt="${product.title}" width="100'>
+         <h4>${product.title}</h4>
+         <p>price: $${product.price}</p>
+         <p>Rating: $${product.rating.rate}</p>
+         <p>${product.description}</p>
+         <button onclick='removeFromCart(${index})'>Remove From Cart</button>';
+       grid.appendChild(card);             
+
+       });
+       totalpriceElement.innerText=totalprice.toFixed(2);
+        }
+        function removeFromCart(index){
+          cart.splice(index,1);
+          
+         localStorage.setItem('cartProducts',JSON.stringify(cart));
+       updateCartDisplay();
+        }
+        window.removeFromCart=removeFromCart;
+        updateCartDisplay();
+        document.getElementById('checkout-btn').addEventListener('click',()=>
+        if(confirm('Are you sure to checkout')){
+          setTimeout(()=>{
+            alert('Thanks for shopping');
+            localStorage.removeItem('cartProducts');
+            updateCartDisplay();
+          },2000);
+        }
+        });
+        });
+      </script>
+     
+     
+  </body>
+</html>
