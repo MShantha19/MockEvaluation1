@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wishlist</title>
+  </head>
+  <body>
+     <nav>
+      <a href="index.html">Home</a>
+      <a href="whislist.html">whislist</a>
+      <a href="cart.html">cart</a>
+
+    </nav>
+    <main>
+    
+    <div id="wishlist-grid" class="grid"></div>
+    </main>
+    
+      <script>
+        document.addEventListener('DOMContentLoaded',() =>{
+       const wishlist =JSON.parse(localstorage.getItem('wishlistProducts'))||[];
+       const grid=document.getElementById('product-grid');
+       
+       wishlist.forEach(products=>{
+         const card = document.createElement('div');
+         card.className = 'card';
+         card.innerHTML='
+         <img src="${product.image}" alt="${product.title}" width="100'>
+         <h4>${product.title}</h4>
+         <p>price: $${product.price}</p>
+         <p>Rating: $${product.rating.rate}</p>
+         <button onclick='addToCart(${JSON.stringify(product)})'>Add to Cart</button>';
+       grid.appendChild(card);             
+
+       });
+        });
+        function addToCart(product){
+          let cart=JSON.parse(localstorage.getItem('cartProducts'))||[];
+         cart.push(product);
+         localStorage.setItem('cartProducts',JSON.stringify(cart));
+         alert('product added to cart');
+        }
+      </script>
+        </body>
+</html>
