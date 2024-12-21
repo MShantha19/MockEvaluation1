@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mini E-Commerece App</title>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="whislist.html">whislist</a>
+      <a href="cart.html">cart</a>
+
+    </nav>
+    <main>
+      <button id="load-products">Load products</button>
+      <div id="product-grid" class="grid"></div>
+    </main>
+      <script>
+        document.getElementById('load-products').addEventListener('click', async() =>{
+       const response = await fetch('http://fakestoreapi.com/products');
+       const products=await response.json();
+       
+       const grid= document.getElementById('product-grid');
+       grid.innerHtml='';
+       products.forEach(products=>{
+         const card = document.createElement('div');
+         card.className = 'card';
+         card.innerHTML='
+         <img src="${product.image}" alt="${product.title}" width="100'>
+         <h4>${product.title}</h4>
+         <p>price: $${product.price}</p>
+         <p>Rating: $${product.rating.rate}</p>
+         <button onclick='addToWhishlist(${JSON.stringify(product)})'>Wishlist</button>';
+       grid.appendChild(card);             
+
+       });
+        });
+        function addToWhishlist(product){
+          let wishlist=JSON.parse(localstorage.getItem('wishlistProducts'))||[];
+         wishlist.push(product);
+         localStorage.setItem('whislistedProducts',JSON.stringify(wishlist));
+         alert('product added to wishlist');
+        }
+      </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
